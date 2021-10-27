@@ -5,6 +5,7 @@ import 'package:kriya_test/controller/product/qty/product_qty.dart';
 import 'package:kriya_test/data/remote/todos/todos_response.dart';
 import 'package:kriya_test/data/variable/color.dart';
 import 'package:kriya_test/utils/function_helper.dart';
+import 'package:kriya_test/view/product/list/component/checkout_button.dart';
 import 'package:kriya_test/view/product/list/component/counter_widget.dart';
 
 class ProductListView extends GetView<ProductListController> {
@@ -14,18 +15,28 @@ class ProductListView extends GetView<ProductListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product List'),
+        title: Obx(() => Text('Total Item Added :${controller.total}')),
         centerTitle: true,
       ),
       body: controller.obx(
-        (state) => ListView.separated(
-            itemBuilder: (context, index) => _itemComponent(state![index]),
-            separatorBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Container(
-                      height: 1, color: blackLight, width: double.infinity),
-                ),
-            itemCount: state?.length ?? 0),
+        (state) => Column(
+          children: [
+            Expanded(
+              child: ListView.separated(
+                  itemBuilder: (context, index) =>
+                      _itemComponent(state![index]),
+                  separatorBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Container(
+                            height: 1,
+                            color: blackLight,
+                            width: double.infinity),
+                      ),
+                  itemCount: state?.length ?? 0),
+            ),
+            checkoutButton()
+          ],
+        ),
         onLoading: const Center(
           child: CircularProgressIndicator.adaptive(),
         ),
@@ -37,7 +48,7 @@ class ProductListView extends GetView<ProductListController> {
   }
 
   Widget _itemComponent(TodosResponse item) {
-    Get.create(() => ProductQtyController(), tag: item.id.toString());
+    Get.lazyPut(() => ProductQtyController(), tag: item.id.toString());
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
