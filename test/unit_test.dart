@@ -1,8 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriya_test/controller/product/list/product_list.dart';
 import 'package:kriya_test/controller/product/qty/product_qty.dart';
+import 'package:kriya_test/utils/register_controller.dart';
 
 void main() async {
+  register.doRegister();
+
   test('''
   Check data from API is not empty''', () {
     final controller = ProductListController();
