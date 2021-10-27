@@ -37,7 +37,7 @@ class ProductListView extends GetView<ProductListController> {
   }
 
   Widget _itemComponent(TodosResponse item) {
-    Get.create(() => ProductQtyController(), tag: item.id.toString());
+    Get.lazyPut(() => ProductQtyController(), tag: item.id.toString());
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
