@@ -18,60 +18,49 @@ class CounterWidget extends GetView {
   @override
   Widget build(BuildContext context) {
     ProductQtyController controller = Get.find(tag: id);
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () => controller.decrement,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: black.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  height: counterSize,
-                  width: counterSize,
-                  child: const Center(
-                    child: Text('-'),
-                  ),
-                ),
+    controller.argument.value = item!;
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => controller.decrement,
+            child: Container(
+              decoration: BoxDecoration(
+                color: black.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
               ),
-              Container(
-                constraints: const BoxConstraints(minWidth: 30),
-                alignment: Alignment.center,
-                child: Obx(
-                  () => Text('${controller.qty}'),
-                ),
+              height: counterSize,
+              width: counterSize,
+              child: const Center(
+                child: Text('-'),
               ),
-              InkWell(
-                onTap: () => controller.increment,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: black.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  height: counterSize,
-                  width: counterSize,
-                  child: const Center(
-                    child: Text('+'),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-        Obx(
-          () => checkoutButton(
-            ProductDetailArgument(
-                image: 'image_placeholder',
-                productName: item?.title,
-                id: id,
-                qty: controller.qty.value),
+          Container(
+            constraints: const BoxConstraints(minWidth: 30),
+            alignment: Alignment.center,
+            child: Obx(
+              () => Text('${controller.qty}'),
+            ),
           ),
-        ),
-      ],
+          InkWell(
+            onTap: () => controller.increment,
+            child: Container(
+              decoration: BoxDecoration(
+                color: black.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              height: counterSize,
+              width: counterSize,
+              child: const Center(
+                child: Text('+'),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
