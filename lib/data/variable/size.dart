@@ -1,0 +1,1 @@
+const counterSize = 40.0;
